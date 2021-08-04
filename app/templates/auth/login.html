@@ -1,15 +1,19 @@
 {% extends 'base.html' %}
 
-{% block header %}
-  <h1>{% block title %}Log In{% endblock %}</h1>
-{% endblock %}
-
 {% block content %}
-  <form method="post">
-    <label for="username">Username</label>
-    <input name="username" id="username" required>
-    <label for="password">Password</label>
-    <input type="password" name="password" id="password" required>
-    <input type="submit" value="Log In">
-  </form>
+{% import "bootstrap/wtf.html" as wtf %}
+<div class="col-6 offset-3">
+    <form method="POST" novalidate>
+        {{ form.csrf_token }}
+        <div class="mb-3">
+            {{ wtf.form_field(form.email, class='form-control') }} 
+        </div>
+        <div class="mb-3">
+            {{ wtf.form_field(form.password, class='form-control') }}
+        </div>
+        <div class="mb-3">
+            <button class="btn btn-info">Login Account</button>
+        </div>
+    </form>
+</div>
 {% endblock %}
