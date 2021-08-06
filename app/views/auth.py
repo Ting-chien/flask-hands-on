@@ -11,10 +11,11 @@ from flask import (
 from app.db import get_db, User
 from werkzeug.security import check_password_hash, generate_password_hash
 from app.validate import AccountForm, LoginForm
+from functools import wraps
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
-# bp.before_app_request() 注册一个 在视图函数之前运行的函数
+# 在每次收到 request 時檢查前端 session 是否帶有 user_id，有的話則將用戶存於 g.user
 @bp.before_app_request
 def load_logged_in_user():
     user_id = session.get('user_id')
@@ -25,6 +26,16 @@ def load_logged_in_user():
         db = get_db()
         g.user = User.query.filter_by(id=user_id).first()
 
+# 建立一個 decorator 來驗證使用者是否已登入
+def login_required(view):
+    @wraps(view)
+    def wrapped_view(**kwargs):
+        if g.user is None:
+            return redirect(url_for('auth.login'))
+
+        return view(**kwargs)
+
+    return wrapped_view
 
 @bp.route('/register', methods=('GET', 'POST'))
 def register():
@@ -75,7 +86,7 @@ def login():
         if error is None:
             session.clear()
             session['user_id'] = user.id
-            return redirect(url_for('index'))
+            return redirect(url_for('users.index'))
 
         flash(error)
 
@@ -85,4 +96,4 @@ def login():
 def logout():
     print('logout')
     session.clear()
-    return redirect(url_for('index'))
+    return redirect(url_for('users.index'))

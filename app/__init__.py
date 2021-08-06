@@ -31,9 +31,9 @@ def create_app():
     from app.views import auth
     app.register_blueprint(auth.bp)
 
-    # blog routes
-    from app.views import blog
-    app.register_blueprint(blog.bp)
+    # users routes
+    from app.views import users
+    app.register_blueprint(users.bp)
     app.add_url_rule('/', endpoint='index')
 
     return app
