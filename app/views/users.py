@@ -8,7 +8,7 @@ from flask import (
 from app.db import get_db, User
 from app.views.auth import login_required
 
-bp = Blueprint('users', __name__, url_prefix='/users')
+bp = Blueprint('users', __name__, url_prefix='/<lang_code>/users')
 
 @bp.route('/')
 def index():

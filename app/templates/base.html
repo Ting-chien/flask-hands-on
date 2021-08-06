@@ -14,7 +14,7 @@
     <!-- Nav bar -->
     <nav class="navbar navbar-light bg-light mb-3">
         <div class="container-fluid">
-            <a href="{{ url_for('users.index') }}" class="navbar-brand">DiiA Admin</a>
+            <a href="{{ url_for('users.index') }}" class="navbar-brand">DiiA {{ _('Admin') }}</a>
             <div class="d-flex">
                 <ul class="nav">
                   {% if g.user %}
@@ -22,14 +22,14 @@
                       Hello, {{ g.user['firstname'] }}!
                     </span>
                     <li class="nav-item">
-                      <a class="nav-link active" aria-current="page" href="{{ url_for('auth.logout') }}">Logout</a>
+                      <a class="nav-link active" aria-current="page" href="{{ url_for('auth.logout') }}">{{ _('Logout') }}</a>
                     </li>
                   {% else %}
                     <li class="nav-item">
-                      <a class="nav-link active" aria-current="page" href="{{ url_for('auth.register') }}">Register</a>
+                      <a class="nav-link active" aria-current="page" href="{{ url_for('auth.register') }}">{{ _('Register') }}</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="{{ url_for('auth.login') }}">Login</a>
+                      <a class="nav-link" href="{{ url_for('auth.login') }}">{{ _('Login') }}</a>
                     </li>
                   {% endif %}
                 </ul>

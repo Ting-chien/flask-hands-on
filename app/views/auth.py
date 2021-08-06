@@ -13,7 +13,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from app.validate import AccountForm, LoginForm
 from functools import wraps
 
-bp = Blueprint('auth', __name__, url_prefix='/auth')
+bp = Blueprint('auth', __name__, url_prefix='/<lang_code>/auth')
 
 # 在每次收到 request 時檢查前端 session 是否帶有 user_id，有的話則將用戶存於 g.user
 @bp.before_app_request
