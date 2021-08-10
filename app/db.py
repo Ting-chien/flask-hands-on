@@ -10,28 +10,13 @@ class User(db.Model):
     firstname = db.Column(db.String(30), nullable=False)
     lastname = db.Column(db.String(30))
     email = db.Column(db.String(30), unique=True, nullable=False)
-    password = db.Column(db.String(30), nullable=False)
-
-    db_user_post = db.relationship("Post", backref="post")
+    password = db.Column(db.String(155), nullable=False)
 
     def __init__(self, firstname, lastname, email, password):
         self.firstname = firstname
         self.lastname = lastname
         self.email = email
         self.password = password
-
-class Post(db.Model):
-    __tablenme__ = 'post'
-    id = db.Column(db.Integer, primary_key=True)
-    author_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    created = db.Column(db.DateTime, default=datetime.now, nullable=False)
-    title = db.Column(db.String(50), nullable=False)
-    body = db.Column(db.String(255), nullable=False)
-
-    def __init__(self, author_id, title, body):
-        self.author_id = author_id
-        self.title = title
-        self.body = body
 
 def get_db():
     if 'db' not in g:
